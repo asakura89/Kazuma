@@ -1,0 +1,66 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "rebuild paprika",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Paprika/Paprika/Paprika.csproj",
+                "--nologo",
+                "--verbosity",
+                "minimal",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                /* "${workspaceFolder}/Kazuma.sln", */
+                "${workspaceFolder}/Kazuma/Kazuma.csproj",
+                "--nologo",
+                "--verbosity",
+                "minimal",
+                "--output",
+                "${workspaceFolder}/Paprika/Paprika/bin/Debug/net7.0/Kazuma",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "rebuild paprika"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/Kazuma.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/Kazuma.sln"
+            ],
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

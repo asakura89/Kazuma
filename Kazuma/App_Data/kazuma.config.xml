@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <!-- paprika config: begin -->
+  <locations>
+    <!-- NOTE: because runner is Paprika, BaseDir will be following base directory of Paprika -->
+    <location path="${var:BaseDir}\\Kazuma\\" />
+  </locations>
+  <pipelines name="kazuma:run" contextType="Ria.PipelineContext, Ayumi">
+    <action type="Kazuma.ExcelReader, Kazuma" method="ReadAndExtractData" />
+    <!-- <action type="Kazuma.WindowsNotifier, ValidatorTask" method="NotifyByWPF" />
+    <action type="Kazuma.EmailNotifier, ValidatorTask" method="NotifyByEmail" /> -->
+  </pipelines>
+  <events>
+    <!-- Note: Handlers from different pipelines needs to be commented/uncommented to make sure they are not executed mistakenly -->
+
+    <!-- Default Handler as examples -->
+    <event name="Paprika:ResultContainsInfo" type="Paprika.DefaultEventHandler, Paprika" method="OnResultContainsInfo" />
+    <event name="Paprika:ResultContainsWarn" type="Paprika.DefaultEventHandler, Paprika" method="OnResultContainsWarn" />
+    <event name="Paprika:ResultContainsError" type="Paprika.DefaultEventHandler, Paprika" method="OnResultContainsError" />
+    <event name="Paprika:PipelineExecutionFailed" type="Paprika.DefaultEventHandler, Paprika" method="OnPipelineExecutionFailed" />
+    <event name="Paprika:PipelineExecutionSuccess" type="Paprika.DefaultEventHandler, Paprika" method="OnPipelineExecutionSuccess" />
+    <event name="Paprika:ExceptionThrown" type="Paprika.DefaultEventHandler, Paprika" method="OnExceptionThrown" />
+  </events>
+  <!-- paprika config: end -->
+
+  <!-- kazuma config: begin -->
+  <!-- NOTE: only accepts tabular data, no pivot, no merged -->
+  <!-- NOTE: because runner is Paprika, BaseDir will be following base directory of Paprika -->
+  <spreadsheet name="kazuma:reminder" path="${var:BaseDir}\\Kazuma\\App_Data\\reminder.xlsx">
+    <worksheet index="0" name="Sheet1">
+      <column index="0" name="Task" type="string" process="true" allowEmpty="false" />
+      <column index="1" name="DueDate" type="datetime" process="true" allowEmpty="false" />
+      <column index="2" name="RemindAgain" type="string" process="true" allowEmpty="true" />
+      <column index="3" name="Note" type="string" process="true" allowEmpty="true" />
+    </worksheet>
+  </spreadsheet>
+  <!-- kazuma config: end -->
+</configuration>
